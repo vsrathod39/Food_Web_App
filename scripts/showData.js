@@ -137,7 +137,6 @@ function appendResultIntoBodySingle(data, parrent, search){
     search.style.display = 'none';
     parrent.innerHTML = null;
     parrent.style.display = 'flex';
-    parrent.style.width = '80%';
 
         let div = document.createElement('div');
         div.setAttribute('class', 'appendSearchBox');
