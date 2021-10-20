@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food_App - fw12_132</title>
+    <link rel="stylesheet" href="./styles/index.css">
+</head>
+<body>
+    <nav id="navCont">
+
+    </nav>
+    <div id="popularMeals">
+
+    </div>
+</body>
+</html>
+
+<script type="module">
+    import navigation from './componens/navbar.js'
+    import {makeAPIRequest, appendData, searchKeyword} from './scripts/showData.js';
+    // searchKeyword();
+
+    let pr = new Promise((resolve, reject) => {
+        let nav = document.getElementById('navCont');
+            nav.innerHTML = navigation();
+            resolve("ok");
+    })
+    pr.then( (res) => {
+        console.log(res);
+        document.getElementById("keyword").addEventListener("input", searchKeyword)
+    })
+
+    // let data = makeAPIRequest('https://api.spoonacular.com/recipes/random?number=2&tags=vegetarian,dessert&apiKey=dd3752c098a44e7eabefd296c77c0fc5');
+
+    // data.then((res) => {
+    //     let parrent = document.getElementById('popularMeals');
+    //     appendData(res, parrent);
+    // })
+    // .catch((error) => {
+    //     console.log(error);
+    // })
+
+</script>

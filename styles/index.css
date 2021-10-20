@@ -1,0 +1,23 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+nav{
+    border: 1px solid red;
+    width: 100%;
+    height: 65px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+#popularMeals{
+    display: grid;
+    grid-template-columns: repeat(4, 22%);
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+#popularMeals img{
+    width: 100%;
+}
