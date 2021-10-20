@@ -1,11 +1,23 @@
 function navigation(){
     return `<span>
             <input type="text" id="keyword" placeholder="Enter keyword to search...">
-            <button>search</button>
+            <button id="searchButton">search</button>
         </span>
         <!-- <a href="index.html">Search Receipe</a> -->
         <a href="receipeOfTheDay.html">Receipe of The Day</a>
         <a href="latestReceipe.html">Latest Receipe</a>`
 }
 
-export default navigation;
+function htmlStruct(){
+    return `<nav id="navCont">
+
+    </nav>
+    <div id="search">
+
+    </div>
+    <div id="popularMeals">
+
+    </div>`
+}
+
+export {htmlStruct, navigation};

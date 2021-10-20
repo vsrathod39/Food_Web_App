@@ -8,38 +8,31 @@
     <link rel="stylesheet" href="./styles/index.css">
 </head>
 <body>
-    <nav id="navCont">
 
-    </nav>
-    <div id="popularMeals">
-
-    </div>
 </body>
 </html>
 
 <script type="module">
-    import navigation from './componens/navbar.js'
-    import {makeAPIRequest, appendData, searchKeyword} from './scripts/showData.js';
-    // searchKeyword();
+    import {htmlStruct, navigation} from './componens/navbar.js'
+    import {onPageLoad, searchKeyword, clickButton} from './scripts/showData.js';
+    document.body.innerHTML = htmlStruct();
+
+    let parrent = document.getElementById('popularMeals'); 
 
     let pr = new Promise((resolve, reject) => {
         let nav = document.getElementById('navCont');
             nav.innerHTML = navigation();
             resolve("ok");
+            reject("failed");
     })
     pr.then( (res) => {
-        console.log(res);
-        document.getElementById("keyword").addEventListener("input", searchKeyword)
+        document.getElementById("keyword").addEventListener('input', searchKeyword);
+        document.getElementById('searchButton').addEventListener('click', clickButton);
+    })
+    .catch( (error) => {
+        console.log(error);
     })
 
-    // let data = makeAPIRequest('https://api.spoonacular.com/recipes/random?number=2&tags=vegetarian,dessert&apiKey=dd3752c098a44e7eabefd296c77c0fc5');
-
-    // data.then((res) => {
-    //     let parrent = document.getElementById('popularMeals');
-    //     appendData(res, parrent);
-    // })
-    // .catch((error) => {
-    //     console.log(error);
-    // })
+    onPageLoad(parrent);
 
 </script>
