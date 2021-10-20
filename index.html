@@ -16,8 +16,8 @@
     import {htmlStruct, navigation} from './componens/navbar.js'
     import {onPageLoad, searchKeyword, clickButton} from './scripts/showData.js';
     document.body.innerHTML = htmlStruct();
-
-    let parrent = document.getElementById('popularMeals'); 
+    document.getElementById('heading').innerHTML = "<h2 id='headSeaction'> Popular Choices </h2>";
+    let parrent = document.getElementById('popularMeals');
 
     let pr = new Promise((resolve, reject) => {
         let nav = document.getElementById('navCont');
@@ -32,7 +32,13 @@
     .catch( (error) => {
         console.log(error);
     })
-
-    onPageLoad(parrent);
+    if(localStorage.getItem("keySearch") !== null && JSON.parse(localStorage.getItem("keySearch")).length !== 0){
+        let data = JSON.parse(localStorage.getItem("keySearch"));
+        console.log(data);
+        document.getElementById("keyword").value = data[0];
+        localStorage.setItem("keySearch", JSON.stringify([]));
+        clickButton();
+    }
+    onPageLoad(parrent, `https://api.spoonacular.com/recipes/random?number=10&apiKey=30a4856c3ee64b76bcb9bc71821bf5ab`);
 
 </script>

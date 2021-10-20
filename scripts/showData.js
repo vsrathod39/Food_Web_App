@@ -14,39 +14,61 @@ async function makeAPIRequest(url){
     }
 }
 
-function onPageLoad(parrent){
-    let data = makeAPIRequest('https://api.spoonacular.com/recipes/random?number=10&tags=vegetarian,dessert&apiKey=dd3752c098a44e7eabefd296c77c0fc5');
+function onPageLoad(parrent, url, flag){
+    let data = makeAPIRequest(url);
 
     data.then((res) => {
         let parrent = document.getElementById('popularMeals');
-        appendData(res, parrent);
+        appendData(res, parrent, flag);
     })
     .catch((error) => {
         console.log(error);
     })
 }
 
-function appendData(data, parrent){
+function appendData(data, parrent, flag){
 
-    data.forEach(({image, title, dishTypes, pricePerServing}) => {
+    data.forEach(({image, title, dishTypes, pricePerServing, healthScore, instructions, readyInMinutes, vegetarian, cuisines, summary}) => {
         let div = document.createElement('div');
         div.setAttribute('class', 'onLoadResutl');
         
         let img = document.createElement('img');
         img.src = image;
 
-        let titleName = document.createElement('h4');
+        let titleName = document.createElement('h2');
         titleName.textContent = title;
 
         let typeDish = document.createElement('p');
-        typeDish.textContent = dishTypes[0];
+        typeDish.innerHTML = "<span>Dish Type: </span>" + dishTypes;
 
         let price = document.createElement('p');
-        price.textContent = pricePerServing + " INR";
+        price.innerHTML = "<span>Price: </span>" + pricePerServing + " INR";
 
         div.append(img, titleName, typeDish, price);
 
         parrent.append(div);
+
+        if(flag){
+            let div2 = document.createElement('div');
+            div2.setAttribute('class', 'onLoadResutl');
+            let summaryRecipes = document.createElement('p');
+            summaryRecipes.innerHTML = "<span>Summery: </span>" + summary;
+            let area =  document.createElement('p');
+            area.innerHTML = "<span>Origin: </span>" + cuisines;
+            let vege = document.createElement('p');
+            vege.innerHTML = "<span>vegetarian: </span>" + vegetarian;
+            let health = document.createElement('p');
+            health.innerHTML = "<span>Health Score: </span>" + healthScore;
+            let time = document.createElement('p');
+            time.innerHTML = "<span>Ready In Minutes: </span>" + readyInMinutes
+            let instruct = document.createElement('p');
+            instruct.innerHTML = "<span>Instructions: </span>" + instructions;
+
+            div2.append(summaryRecipes, area, vege, health, time, instruct);
+
+            parrent.append(div2);
+        }
+
     });
 }
 
@@ -167,6 +189,10 @@ function appendResultIntoBodySingle(data, parrent, search){
 
 function clickButton(){
     let keyword = document.getElementById("keyword").value;
+    if(keyword.length < 1){
+        return false;
+    }
+    document.getElementById("headSeaction").textContent = "Searched Results";
     let search = document.getElementById("search");
     let parrent = document.getElementById("popularMeals");
     makeAPIRequest(`https://www.themealdb.com/api/json/v1/1/search.php?s=${keyword}`)

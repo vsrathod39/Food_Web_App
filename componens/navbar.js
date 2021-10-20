@@ -3,7 +3,6 @@ function navigation(){
             <input type="text" id="keyword" placeholder="Enter keyword to search...">
             <button id="searchButton">search</button>
         </span>
-        <!-- <a href="index.html">Search Receipe</a> -->
         <a href="receipeOfTheDay.html">Receipe of The Day</a>
         <a href="latestReceipe.html">Latest Receipe</a>`
 }
@@ -13,6 +12,9 @@ function htmlStruct(){
 
     </nav>
     <div id="search">
+
+    </div>
+    <div id="heading">
 
     </div>
     <div id="popularMeals">

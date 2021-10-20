@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe of The Day - fw12_132</title>
+    <link rel="stylesheet" href="./styles/receipeOfTheDay.css">
+</head>
+<body>
+
+</body>
+</html>
+<script type="module">
+    import {htmlStruct, navigation} from './componens/navbar.js'
+    import {onPageLoad, searchKeyword, clickButton} from './scripts/showData.js';
+    document.body.innerHTML = htmlStruct();
+    document.getElementById('heading').innerHTML = "<h2> Receipe Of The Day </h2>";
+    // document.getElementById('navCont').innerHTML = navigation();
+    let pr = new Promise((resolve, reject) => {
+        let nav = document.getElementById('navCont');
+            nav.innerHTML = navigation();
+            resolve("ok");
+            reject("failed");
+    })
+    pr.then( (res) => {
+        document.getElementById("keyword").addEventListener('input', searchKeyword);
+        document.getElementById('searchButton').addEventListener('click', () => {
+            let keyword = document.getElementById("keyword").value;
+            console.log(keyword);
+            if(localStorage.getItem("keySearch") === null){
+                localStorage.setItem("keySearch", JSON.stringify([keyword]));
+            }else{
+                localStorage.setItem("keySearch", JSON.stringify([keyword]))
+            }
+            window.location.href = "./index.html"});
+    })
+    .catch( (error) => {
+        console.log(error);
+    })
+    let parrent = document.getElementById('popularMeals'); 
+    onPageLoad(parrent, `https://api.spoonacular.com/recipes/random?number=1&apiKey=30a4856c3ee64b76bcb9bc71821bf5ab`, true)
+</script>
