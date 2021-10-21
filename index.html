@@ -32,13 +32,17 @@
     .catch( (error) => {
         console.log(error);
     })
+    let flag = true;
     if(localStorage.getItem("keySearch") !== null && JSON.parse(localStorage.getItem("keySearch")).length !== 0){
         let data = JSON.parse(localStorage.getItem("keySearch"));
         console.log(data);
         document.getElementById("keyword").value = data[0];
+        flag = data[1];
         localStorage.setItem("keySearch", JSON.stringify([]));
         clickButton();
     }
-    onPageLoad(parrent, `https://api.spoonacular.com/recipes/random?number=10&apiKey=30a4856c3ee64b76bcb9bc71821bf5ab`);
+    if(flag){
+        onPageLoad(parrent, `https://api.spoonacular.com/recipes/random?number=10&apiKey=30a4856c3ee64b76bcb9bc71821bf5ab`);
+    }
 
 </script>

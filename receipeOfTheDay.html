@@ -15,7 +15,7 @@
     import {htmlStruct, navigation} from './componens/navbar.js'
     import {onPageLoad, searchKeyword, clickButton} from './scripts/showData.js';
     document.body.innerHTML = htmlStruct();
-    document.getElementById('heading').innerHTML = "<h2> Receipe Of The Day </h2>";
+    document.getElementById('heading').innerHTML = "<h2 id='headSeaction'> Receipe Of The Day </h2>";
     // document.getElementById('navCont').innerHTML = navigation();
     let pr = new Promise((resolve, reject) => {
         let nav = document.getElementById('navCont');
@@ -27,11 +27,10 @@
         document.getElementById("keyword").addEventListener('input', searchKeyword);
         document.getElementById('searchButton').addEventListener('click', () => {
             let keyword = document.getElementById("keyword").value;
-            console.log(keyword);
             if(localStorage.getItem("keySearch") === null){
-                localStorage.setItem("keySearch", JSON.stringify([keyword]));
+                localStorage.setItem("keySearch", JSON.stringify([keyword, false]));
             }else{
-                localStorage.setItem("keySearch", JSON.stringify([keyword]))
+                localStorage.setItem("keySearch", JSON.stringify([keyword, false]))
             }
             window.location.href = "./index.html"});
     })

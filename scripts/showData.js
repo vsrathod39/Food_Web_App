@@ -12,6 +12,9 @@ async function makeAPIRequest(url){
     if(data.meals !== undefined){
         return data.meals;
     }
+    if(data.results !== undefined){
+        return data.results;
+    }
 }
 
 function onPageLoad(parrent, url, flag){
@@ -28,9 +31,20 @@ function onPageLoad(parrent, url, flag){
 
 function appendData(data, parrent, flag){
 
-    data.forEach(({image, title, dishTypes, pricePerServing, healthScore, instructions, readyInMinutes, vegetarian, cuisines, summary}) => {
+    data.forEach(({image, title, dishTypes, pricePerServing, healthScore, instructions, readyInMinutes, vegetarian, cuisines, summary}, el) => {
         let div = document.createElement('div');
         div.setAttribute('class', 'onLoadResutl');
+        if(flag === undefined){
+            div.onclick = () =>{
+                console.log(data[el]);
+                if(localStorage.getItem("foodId") === null){
+                    localStorage.setItem("foodId", JSON.stringify(data[el]));
+                }else{
+                    localStorage.setItem("foodId", JSON.stringify(data[el]));
+                }
+                window.location.href = "./recipesDetails.html";
+            }
+        }
         
         let img = document.createElement('img');
         img.src = image;
@@ -93,7 +107,7 @@ function searchKeyword(d){
         .catch( (error) => {
             console.log(error);
         })
-    },2000)
+    },1000)
 }
 
 function showSearchResult(search, data){
@@ -125,7 +139,7 @@ function appendResultIntoBody(data, parrent, search){
     parrent.innerHTML = null;
     parrent.style.display = 'flex';
 
-    data.forEach(({strMealThumb, strMeal, strArea, strCategory, strInstructions, strYoutube}) => {
+    data.forEach(({id, strMealThumb, strMeal, strArea, strCategory, strInstructions, strYoutube}) => {
         let div = document.createElement('div');
         div.setAttribute('class', 'appendSearchBox');
 
@@ -159,9 +173,10 @@ function appendResultIntoBodySingle(data, parrent, search){
     search.style.display = 'none';
     parrent.innerHTML = null;
     parrent.style.display = 'flex';
+    document.getElementById("headSeaction").textContent = "Searched Results";
 
         let div = document.createElement('div');
-        div.setAttribute('class', 'appendSearchBox');
+        div.setAttribute('class', 'singleBox');
 
         let a = document.createElement('a');
         a.href = data.strYoutube;
@@ -186,7 +201,6 @@ function appendResultIntoBodySingle(data, parrent, search){
 
         parrent.append(div);
 }
-
 function clickButton(){
     let keyword = document.getElementById("keyword").value;
     if(keyword.length < 1){
@@ -197,6 +211,7 @@ function clickButton(){
     let parrent = document.getElementById("popularMeals");
     makeAPIRequest(`https://www.themealdb.com/api/json/v1/1/search.php?s=${keyword}`)
     .then( (res) => {
+        document.getElementById("keyword").value = "";
         appendResultIntoBody(res, parrent, search);
     })
     .catch( (error) => {
@@ -204,4 +219,4 @@ function clickButton(){
     })
 }
 
-export {onPageLoad, searchKeyword, clickButton};
+export {onPageLoad, searchKeyword, clickButton, appendData};

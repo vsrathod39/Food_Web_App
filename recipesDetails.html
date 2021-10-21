@@ -4,21 +4,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Food_App - fw12_132</title>
-    <link rel="stylesheet" href="./styles/index.css">
+    <title>Recipe of The Day - fw12_132</title>
+    <link rel="stylesheet" href="./styles/receipeOfTheDay.css">
 </head>
 <body>
 
 </body>
 </html>
-
 <script type="module">
     import {htmlStruct, navigation} from './componens/navbar.js'
-    import {onPageLoad, searchKeyword, clickButton} from './scripts/showData.js';
+    import {onPageLoad, searchKeyword, clickButton, appendData} from './scripts/showData.js';
     document.body.innerHTML = htmlStruct();
-    document.getElementById('heading').innerHTML = "<h2 id='headSeaction'> Newely added recipes!!! </h2>";
-    let parrent = document.getElementById('popularMeals');
-
+    document.getElementById('heading').innerHTML = "<h2 id='headSeaction'> Receipe Details </h2>";
     let pr = new Promise((resolve, reject) => {
         let nav = document.getElementById('navCont');
             nav.innerHTML = navigation();
@@ -39,6 +36,9 @@
     .catch( (error) => {
         console.log(error);
     })
-    onPageLoad(parrent, `https://api.spoonacular.com/recipes/random?number=5&apiKey=30a4856c3ee64b76bcb9bc71821bf5ab`);
-
+    let data = JSON.parse(localStorage.getItem("foodId"));
+    let tempArr = [data];
+    // localStorage.setItem("foodId", JSON.stringify([]));
+    let parrent = document.getElementById('popularMeals');
+    appendData(tempArr, parrent, true);
 </script>
